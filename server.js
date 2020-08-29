@@ -17,7 +17,7 @@ app.use(express.json());
 // ================================================================================
 
 require("./routes/htmlRoutes")(app);
-
+require("./routes/apiRoutes")(app);
 // =============================================================================
 // LISTENER
 // The below code effectively 'starts' our server
