@@ -7,11 +7,12 @@ const fs = require("fs");
 // ===============================================================================
 
 module.exports = function (app) {
-  fs.readFile("./db/db.json", "uft8", function (req, res) {
+  console.log("Test api route is working");
+  fs.readFile("./db/db.json", "utf8", function (err, res) {
     if (err) throw err;
 
     const noteData = JSON.parse(res);
-    console.log("current note data" + noteData);
+    console.log("current note data " + JSON.stringify(noteData));
 
     app.get("../public/assets/notes", function (req, res) {
       res.json(noteData);
@@ -25,11 +26,10 @@ module.exports = function (app) {
     });
 
     app.post("/api/clear", function (req, res) {
-      // Empty out the arrays of data
-      tableData.length = 0;
-      waitListData.length = 0;
-
-      res.json({ ok: true });
+      //   // Empty out the arrays of data
+      //   tableData.length = 0;
+      //   waitListData.length = 0;
+      //   res.json({ ok: true });
     });
 
     function updateDB() {
