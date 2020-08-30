@@ -28,10 +28,10 @@ module.exports = function (app) {
       res.json(noteData[req.params.id]);
     });
 
-    app.get("/api/notes/:id", function (req, res) {
+    app.delete("/api/notes/:id", function (req, res) {
       noteData.splice(req.params.id, 1);
       updateDB();
-      console.log("Note " + req.params.id + " deleted");
+      return console.log("Note " + req.params.id + " deleted");
     });
 
     ///

@@ -4,8 +4,6 @@ const $saveNoteBtn = $(".save-note");
 const $newNoteBtn = $(".new-note");
 const $noteList = $(".list-container .list-group");
 
-console.log("index.js linked");
-
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
@@ -37,7 +35,7 @@ const deleteNote = (id) => {
 // If there is an activeNote, display it, otherwise render empty inputs
 const renderActiveNote = () => {
   $saveNoteBtn.hide();
-  console.log("id is " + activeNote.id);
+
   if (activeNote.id) {
     $noteTitle.attr("readonly", true);
     $noteText.attr("readonly", true);
@@ -58,10 +56,13 @@ const handleNoteSave = function () {
     text: $noteText.val(),
   };
 
-  saveNote(newNote).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  // saveNote(newNote).then(() => {
+  //   getAndRenderNotes();
+  //   renderActiveNote();
+  // });
+  saveNote(newNote);
+  getAndRenderNotes();
+  renderActiveNote();
 };
 
 // Delete the clicked note
@@ -75,10 +76,13 @@ const handleNoteDelete = function (event) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  // deleteNote(note.id).then(() => {
+  //   getAndRenderNotes();
+  //   renderActiveNote();
+  // });
+  deleteNote(note.id);
+  getAndRenderNotes();
+  renderActiveNote();
 };
 
 // Sets the activeNote and displays it
@@ -139,9 +143,7 @@ const renderNoteList = (notes) => {
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
-  return getNotes().then(function (note) {
-    renderNoteList(note);
-  });
+  return getNotes().then(renderNoteList);
 };
 
 $saveNoteBtn.on("click", handleNoteSave);
