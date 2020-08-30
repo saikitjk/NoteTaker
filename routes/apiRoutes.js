@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const path = require("path");
 // ===============================================================================
 // ROUTING
 // ===============================================================================
@@ -25,14 +25,25 @@ module.exports = function (app) {
     });
 
     app.get("/api/notes/:id", function (req, res) {
-      res.json(noteData[req.object.id]);
+      res.json(noteData[req.params.id]);
     });
 
     app.get("/api/notes/:id", function (req, res) {
-      noteData.splice(req.object.id, 1);
+      noteData.splice(req.params.id, 1);
       updateDB();
-      console.log("Note " + req.object.id + " deleted");
+      console.log("Note " + req.params.id + " deleted");
     });
+
+    ///
+    app.get("/notes", function (req, res) {
+      res.sendFile(path.join(__dirname, "../public/notes.html"));
+    });
+
+    // If no matching route is found default to home
+    app.get("*", function (req, res) {
+      res.sendFile(path.join(__dirname, "../public/index.html"));
+    });
+    ///
 
     function updateDB() {
       fs.writeFile("./db/db.json", JSON.stringify(noteData, "\t"), (err) => {
