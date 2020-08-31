@@ -6,6 +6,10 @@ This is a note taking application that allows use to create, view and delete the
 
 The main task of this project is to build the banend and connect to the given frontend of the application.
 
+## Deployed application
+
+     https://notestaker-jk.herokuapp.com/
+
 ## Demo
 
 ![README](https://user-images.githubusercontent.com/34286313/91679445-2c5ae000-eafd-11ea-8b46-9ed78572dc37.gif)
