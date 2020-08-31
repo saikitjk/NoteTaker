@@ -70,9 +70,10 @@ const handleNoteDelete = function (event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
 
-  const note = $(this).parent(".list-group-item").data();
+  //const note = $(this).parent(".list-group-item").data("id");
+  const note = $(this).data("id");
 
-  if (activeNote.id === note.id) {
+  if (activeNote.id === note) {
     activeNote = {};
   }
 
@@ -80,7 +81,7 @@ const handleNoteDelete = function (event) {
   //   getAndRenderNotes();
   //   renderActiveNote();
   // });
-  deleteNote(note.id);
+  deleteNote(note);
   getAndRenderNotes();
   renderActiveNote();
 };
@@ -115,28 +116,43 @@ const renderNoteList = (notes) => {
 
   // Returns jquery object for li with given text and delete button
   // unless withDeleteButton argument is provided as false
-  const create$li = (text, withDeleteButton = true) => {
-    const $li = $("<li class='list-group-item'>");
-    const $span = $("<span>").text(text);
-    $li.append($span);
+  // const create$li = (text, withDeleteButton = true) => {
+  //   const $li = $("<li class='list-group-item'>");
+  //   const $span = $("<span>").text(text);
+  //   $li.append($span);
 
-    if (withDeleteButton) {
-      const $delBtn = $(
-        "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
-      );
-      $li.append($delBtn);
-    }
-    return $li;
-  };
+  //   if (withDeleteButton) {
+  //     const $delBtn = $(
+  //       "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
+  //     );
+  //     $li.append($delBtn);
+  //   }
+  //   return $li;
+  // };
 
   if (notes.length === 0) {
     noteListItems.push(create$li("No saved Notes", false));
   }
 
-  notes.forEach((note) => {
-    const $li = create$li(note.title).data(note);
+  // notes.forEach((note) => {
+  //   const $li = create$li(note.title).data(note);
+  //   noteListItems.push($li);
+  // });
+
+  for (var i = 0; i < notes.length; i++) {
+    var note = notes[i];
+    const $li = $("<li class='list-group-item'>").data(note);
+    $li.data("id", i);
+
+    const $span = $("<span>").text(note.title);
+    const $delBtn = $(
+      "<i class='fas fa-trash-alt float-right text-danger delete-note'data-id=" +
+        i +
+        ">"
+    );
+    $li.append($span, $delBtn);
     noteListItems.push($li);
-  });
+  }
 
   $noteList.append(noteListItems);
 };
